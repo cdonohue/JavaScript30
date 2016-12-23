@@ -66,8 +66,8 @@
     return document.querySelector(`audio[data-key="${keyCode}"]`);
   };
 
-  [...document.querySelectorAll("audio")]
-    .forEach(audioElement => {
+  const addAudioListeners = (audioElements) => {
+    audioElements.forEach(audioElement => {
       const keyElement = lookupKey(audioElement.dataset.key);
       audioElement.addEventListener("playing", (e) => {
         keyElement.classList.add("playing");
@@ -75,8 +75,8 @@
       audioElement.addEventListener("ended", (e) => {
         keyElement.classList.remove("playing");
       });
-    })
-  ;
+    });
+  }
 
   const playSound = (e) => {
     const { keyCode } = e;
@@ -86,6 +86,7 @@
     audio.play();
   }
 
+  addAudioListeners([...document.querySelectorAll("audio")]);
   window.addEventListener("keypress", playSound);
 </script>
 
